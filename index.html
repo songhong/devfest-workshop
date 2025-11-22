@@ -57,6 +57,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 2rem;
+            position: relative;
         }
 
         nav .logo {
@@ -66,12 +67,44 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+            z-index: 1001;
         }
 
         nav ul {
             list-style: none;
             display: flex;
             gap: 2rem;
+        }
+
+        /* 汉堡菜单按钮 */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--neon-blue);
+            margin: 3px 0;
+            transition: all 0.3s;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
         }
 
         nav a {
@@ -391,21 +424,228 @@
 
         /* 响应式设计 */
         @media (max-width: 768px) {
+            /* 导航栏移动端样式 */
+            nav .container {
+                padding: 0 1rem;
+            }
+
+            nav .logo {
+                font-size: 1.2rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                max-width: 300px;
+                height: calc(100vh - 70px);
+                background: rgba(10, 14, 39, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                gap: 0;
+                padding: 2rem 0;
+                transition: right 0.3s ease;
+                border-left: 2px solid rgba(0, 243, 255, 0.3);
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+                overflow-y: auto;
+            }
+
+            nav ul.active {
+                right: 0;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav a {
+                display: block;
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+                border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+            }
+
+            nav a.active::after {
+                display: none;
+            }
+
+            nav a.active {
+                background: rgba(0, 243, 255, 0.1);
+                border-left: 3px solid var(--neon-blue);
+            }
+
+            /* Hero区域移动端样式 */
+            .hero {
+                padding: 1.5rem;
+                min-height: calc(100vh - 70px);
+            }
+
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
+                margin-bottom: 0.8rem;
+                line-height: 1.2;
             }
             
             .hero h2 {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+                padding: 0 1rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+                width: 100%;
+                max-width: 280px;
             }
             
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
+            /* 卡片容器移动端样式 */
             .cards-container {
                 grid-template-columns: 1fr;
+                padding: 2rem 1rem;
+                gap: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .card .icon {
+                font-size: 2.5rem;
+            }
+
+            .card h3 {
+                font-size: 1.3rem;
+            }
+
+            .card p {
+                font-size: 0.95rem;
+            }
+
+            /* 页面内容移动端样式 */
+            .page-content {
+                padding: 2rem 1rem;
+            }
+
+            .page-content h1 {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .page-content h2 {
+                font-size: 1.5rem;
+                margin: 1.5rem 0 1rem;
+            }
+
+            .page-content p {
+                font-size: 1rem;
+            }
+
+            /* 特性网格移动端样式 */
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .feature-item {
+                padding: 1.5rem;
+            }
+
+            .feature-item h3 {
+                font-size: 1.1rem;
+            }
+
+            /* 个人信息卡片移动端样式 */
+            .profile-card {
+                margin: 2rem 1rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+
+            .profile-name {
+                font-size: 2rem;
+            }
+
+            .profile-title {
+                font-size: 1.1rem;
+            }
+
+            .profile-interests,
+            .contact-info {
+                padding: 1.5rem;
+            }
+
+            /* 内容区域顶部偏移调整 */
+            .content {
+                padding-top: 70px;
+            }
+        }
+
+        /* 小屏幕优化 */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .hero h2 {
+                font-size: 1rem;
+            }
+
+            .hero .subtitle {
+                font-size: 0.9rem;
+            }
+
+            nav .logo {
+                font-size: 1rem;
+            }
+
+            .profile-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .profile-name {
+                font-size: 1.6rem;
+            }
+
+            .page-content h1 {
+                font-size: 1.6rem;
+            }
+
+            .page-content h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* 触摸设备优化 */
+        @media (hover: none) and (pointer: coarse) {
+            nav a,
+            .cta-button,
+            .card {
+                -webkit-tap-highlight-color: rgba(0, 243, 255, 0.2);
+            }
+
+            .card:active {
+                transform: scale(0.98);
+            }
+
+            .cta-button:active {
+                transform: translateY(-1px) scale(0.98);
             }
         }
 
@@ -430,7 +670,12 @@
     <nav>
         <div class="container">
             <div class="logo">DevFest Workshop</div>
-            <ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
                 <li><a href="#home" class="nav-link active">首页</a></li>
                 <li><a href="#gdg" class="nav-link">GDG & DevFest</a></li>
                 <li><a href="#devtools" class="nav-link">DevTools MCP</a></li>
@@ -677,7 +922,8 @@
         canvas.height = window.innerHeight;
 
         const particles = [];
-        const particleCount = 100;
+        // 根据屏幕大小调整粒子数量
+        const particleCount = window.innerWidth < 768 ? 50 : 100;
 
         class Particle {
             constructor() {
@@ -744,6 +990,15 @@
             canvas.height = window.innerHeight;
         });
 
+        // 汉堡菜单功能
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
         // 页面导航
         const navLinks = document.querySelectorAll('.nav-link');
         const pages = document.querySelectorAll('.page');
@@ -761,6 +1016,12 @@
                 pages.forEach(page => page.classList.remove('active'));
                 document.getElementById(targetId).classList.add('active');
                 
+                // 关闭移动端菜单
+                if (window.innerWidth <= 768) {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
+                
                 // 重置滚动位置
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 
@@ -774,6 +1035,14 @@
                     });
                 }, 100);
             });
+        });
+
+        // 点击页面其他区域关闭菜单
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav') && navMenu.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
         });
 
         // 滚动动画
